@@ -1,0 +1,33 @@
+{
+  "name": "standard-report-designer",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./build/cjs/index.js",
+  "module": "./build/es/index.js",
+  "files": [
+    "build"
+  ],
+  "dependencies": {
+    "@dhis2/d2-ui-rich-text": "^1.0.0",
+    "@material-ui/core": "^3.0.3",
+    "@material-ui/icons": "^3.0.1",
+    "bootstrap": "^4.1.3",
+    "draft-js": "^0.10.5",
+    "draft-js-plugin-editor": "0.0.0",
+    "react": "^16.5.0",
+    "react-bootstrap": "^0.32.4",
+    "react-collapsible": "^2.3.1",
+    "react-dom": "^16.5.0",
+    "react-draft-wysiwyg": "^1.12.13",
+    "react-quill": "^1.3.1",
+    "react-sanfona": "^1.3.0",
+    "react-scripts": "1.1.5",
+    "reactstrap": "^6.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
