@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Header from "./components/ui/Header";
-
+import Header from "./ui/Header";
+import Charts from 'react-charts';
 import { ListGroup, ListGroupItem } from "reactstrap";
 //import ReactDOM from "react-dom";
 //import { Link } from 'react-router';
@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 //import { Redirect } from 'react-router-dom'
 //import App from "./App";
-import Report from "./components/Report";
+//import Report from "./components/Report";
 
 import {
   Card,
@@ -24,8 +24,10 @@ import {
 } from "reactstrap";
 
 
-
-class Dashboard extends Component {
+// <Router>
+//   <Route path="/components/report" component={Report} />
+// </Router>
+class Visualizer extends Component {
   // state = {
   //   redirect: false
   // };
@@ -59,21 +61,16 @@ class Dashboard extends Component {
             <div className="col-md-9">
               <br />
               <Card color="primary">
-                <CardHeader>This is my Home Interface</CardHeader>
+                <CardHeader>data Visualizer Customize</CardHeader>
                 <CardText>
-                  <ListGroup>
-                    <ListGroupItem>ANC 4th visit Report </ListGroupItem>
-                    <ListGroupItem>
-                      Ruiru Healthcare Malaria Report
-                    </ListGroupItem>
-                  </ListGroup>
+                  
                 </CardText>
               </Card>
-           
+             <Router>
              
-              <Link to="/components/report"><Button color="primary" className="float-right">New</Button></Link>
+             <Button color="primary" className="float-right">Save</Button>
              
-             
+              </Router>
             </div>
           </div>
         </div>
@@ -81,4 +78,4 @@ class Dashboard extends Component {
     );
   }
 }
-export default Dashboard;
+export default Visualizer;
