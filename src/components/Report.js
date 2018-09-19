@@ -30,7 +30,7 @@ class Report extends Component {
               <CardText>data</CardText>
             </Card>
 
-            <Link to="/App">
+            <Link to="/ReportEditor">
               <Button color="primary" className="float-right">
                 Next
               </Button>

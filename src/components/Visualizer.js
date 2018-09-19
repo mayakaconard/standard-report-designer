@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-bootstrap/dist/react-bootstrap";
 import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { EditorState, convertFromRaw} from "draft-js";
 import Header from "./ui/Header";
 import Sidebar from "./ui/Sidebar";
 import { Link } from "react-router-dom";
@@ -13,14 +13,11 @@ import { Link } from "react-router-dom";
 //charts
 import {  Form, FormGroup } from 'reactstrap';
 import { Line , Bar} from 'react-chartjs-2';
-import { TabContent, TabPane, Nav, NavItem, NavLink, CardTitle, CardText, Row, Col } from 'reactstrap';
+import {  Nav,Row, Col } from 'reactstrap';
 //charts end 
 
 import { Card, CardBody, CardFooter,Button } from "reactstrap";
-//import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
-//import CKEditor from '@ckeditor/ckeditor5-react';
-//import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import CKEditor from "react-ckeditor-wrapper";
+
 
 
 //chart variables 

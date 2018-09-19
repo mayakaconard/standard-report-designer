@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, CardHeader, CardFooter, CardBody, Collapse, CardTitle, CardText } from 'reactstrap';
+import { Card, CardHeader, CardFooter, CardBody } from 'reactstrap';
 import Collapsible from 'react-collapsible';
 //import {Accordion, AccordionItem} from 'react-sanfona';
 
@@ -21,18 +21,12 @@ class Sidebar extends React.Component {
         this.setState({ collapse: !this.state.collapse });
       }
     render() {
-        const { contentState } = this.state;
+        //const { contentState } = this.state;
         return (
             <Card>
             <CardHeader>Selected report attributes</CardHeader>
             <CardBody>
-              {/* <CardText>Selected Data elements</CardText> */}
-              {/* <Button  color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Go somewhere</Button>
-              <Collapse isOpen={this.state.collapse}>
-              <CardBody>
-                nkjsfsnfjsfnkf
-              </CardBody>
-              </Collapse> */}
+            
               <Collapsible trigger="Data Elements">
         <li>This is the collapsible content. It can be any element or React component you like.</li>
         <li>It can even be another Collapsible component. Check out the next section!</li>

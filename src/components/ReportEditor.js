@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Editor } from "react-draft-wysiwyg";
+//import { Editor } from "react-draft-wysiwyg";
 import "react-bootstrap/dist/react-bootstrap";
 import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import CKEditor from "react-ckeditor-component";
@@ -8,7 +8,7 @@ import Sidebar from "./ui/Sidebar";
 import { Link } from "react-router-dom";
 
 //import 'webpack';
-import { Card, CardBody, CardFooter,Button } from "reactstrap";
+import {Button } from "reactstrap";
 
 
 class ReportEditor extends Component {
@@ -55,8 +55,8 @@ afterPaste(evt){
           </div>
           <div className="col-md-9">
             <div>
-              <Card bsStyle="primary">
-                <CardBody>
+              
+                
                 <CKEditor 
             activeClass="p10"
             content={this.state.content}
@@ -65,11 +65,9 @@ afterPaste(evt){
                 "afterPaste": this.afterPaste,
                 "change":this.onChange
             }}
-            />
-                </CardBody>
+            />             
                 
-                <CardFooter>Standard Report Customizer</CardFooter>
-              </Card>
+               
               <Link to="/Visualizer">
               <Button color="primary" className="float-right">
                 Visualizer

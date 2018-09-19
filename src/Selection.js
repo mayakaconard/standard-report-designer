@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FilteredMultiSelect from "react-filtered-multiselect";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { CustomInput, Form, FormGroup, Label } from "reactstrap";
+import { CustomInput, Form, FormGroup} from "reactstrap";
 
 //API FETCH DATA FUNCTIONS
 
