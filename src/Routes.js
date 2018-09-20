@@ -8,9 +8,9 @@ import Visualizer  from "./components/Visualizer";
 export default () =>
  <Switch>
      <Route path="/" exact component={Dashboard} />
-   <Route path="/components/Report" exact component={Report} />
-   <Route path="/components/App" exact component={App} />
-   <Route path="/components/Visualizer" exact component={Visualizer} />
+   <Route path="/Report" exact component={Report} />
+   <Route path="/App" exact component={App} />
+   <Route path="/Visualizer" exact component={Visualizer} />
 
    { /* Finally, catch all unmatched routes */ }
    {/* <Route component={NotFound} /> */}

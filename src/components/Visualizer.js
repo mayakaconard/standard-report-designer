@@ -1,81 +1,155 @@
 import React, { Component } from "react";
+
+//Import Editor
+import { Editor } from "react-draft-wysiwyg";
+import "react-bootstrap/dist/react-bootstrap";
+import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertFromRaw} from "draft-js";
 import Header from "./ui/Header";
-import Charts from 'react-charts';
-import { ListGroup, ListGroupItem } from "reactstrap";
-//import ReactDOM from "react-dom";
-//import { Link } from 'react-router';
-import {
-  BrowserRouter as Router,
-  NavLink,
-  Link,
-  Redirect,
-  Switch,
-  Route
-} from "react-router-dom";
-//import { Redirect } from 'react-router-dom'
-//import App from "./App";
-//import Report from "./components/Report";
+import Sidebar from "./ui/Sidebar";
+import { Link } from "react-router-dom";
+//import 'webpack';
 
-import {
-  Card,
-  Button, 
-  CardHeader, 
-  CardText  
-} from "reactstrap";
+//charts
+import {  Form, FormGroup } from 'reactstrap';
+import { Line , Bar} from 'react-chartjs-2';
+import {  Nav,Row, Col } from 'reactstrap';
+//charts end 
+
+import { Card, CardBody, CardFooter,Button } from "reactstrap";
 
 
-// <Router>
-//   <Route path="/components/report" component={Report} />
-// </Router>
+
+//chart variables 
+
+var data = {
+  labels: ["January", "February", "March", "April", "May", "June", "July"],
+  datasets: [{
+    label: "Measles",
+    borderColor: 'rgb(255, 99, 132)',
+    data: [4, 14, 12, 2, 1, 5, 13],
+  },
+  {
+    label: "Rubella",
+    borderColor: '#0000FF',
+    data: [3, 10, 5, 2, 20, 16, 10],
+  }]
+}
+
+//end
+
+const content = {
+  entityMap: {},
+  blocks: [
+    {
+      key: "637gr",
+      text: "",
+      type: "unstyled",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
+    }
+  ]
+};
 class Visualizer extends Component {
-  // state = {
-  //   redirect: false
-  // };
+  constructor(props) {
+    super(props);
+    const contentState = convertFromRaw(content);
+    this.state = {
+      contentState
+    };
+  }
 
-  // setRedirect = () => {
-  //   this.setState({
-  //     redirect: true
-  //   });
-  // };
+  onContentStateChange = contentState => {
+    this.setState({
+      contentState
+    });
+  };
 
-  // renderRedirect = () => {
-  //   if (this.state.redirect) {
-  //     return <Redirect to="/report" />;
-  //   }
-  // };
-
-  
+  state = { editorState: EditorState.createEmpty() };
+  onChange = editorState => this.setState({ editorState });
   render() {
-    return (      
-        <div className="container-fluid">
-          <br />
-          <Header />
+    const { contentState } = this.state;
+    return (
+      <div className="container-fluid">
+        {/* Application Top Bar */}
+        <Header />
 
-          <div className="row">
-            <div className="col-md-3">
-              <br />
-              <Card>
-                <CardHeader>Selected report attributes</CardHeader>
-              </Card>
-            </div>
-            <div className="col-md-9">
-              <br />
-              <Card color="primary">
-                <CardHeader>data Visualizer Customize</CardHeader>
-                <CardText>
+        {/* End of Application top bar */}
+        <br />
+        <div className="row">
+          <div className="col-md-3">
+            {/*  The application Sidebar*/}
+            <Sidebar />
+
+            {/* End Of Sidebar */}
+          </div>
+          <div className="col-md-9">
+            <div>
+              <Card bsStyle="primary">
+                <CardBody>
+                  <Editor
+                    editorState={this.state.editorState}
+                    wrapperClassName="rdw-editor-wrapper"
+                    editorClassName="rdw-editor-main"
+                    toolbarClassName="rdw-editor-toolbar"
+                    onEditorStateChange={this.onChange}
+                    onContentStateChange={this.onContentStateChange}
+                  />
+
+    <Nav tabs>      
+        </Nav>
+        <Form>
+          <FormGroup>
+              <Row>
+                  <Col md={5}>
+                  <select class="selectpicker form-control input-place"  name="select_option" id="disease" onChange="setCode(this)" required>
+                  {/* multiple data-live-search="true" */}
+                  <option value="">Select Region</option>
+                  <option value="44">Central</option>
+                  <option value="55">Coast</option>
+                  <option value="33">Eastern</option>
+                  <option value="22">Nairobi</option>
+                  <option value="11">N/Eastern</option>
+                  <option value="32">Nyanza</option>
+                  <option value="34">Western</option>
+                  </select>
+                  </Col>
+                  <Col md={5}>
+                  <select class="form-control" id="county">
+                  <option>Select County</option>
+                  </select>
+                  </Col>
+                  <Col md={2}>
+                  <Button>Generate Chart</Button>
+                  </Col>
                   
-                </CardText>
+              </Row>
+              
+          </FormGroup>
+          
+      </Form>
+          <Bar data={data} className="fullsize" />
+                </CardBody>
+                <textarea
+                  className="form-control"
+                  disabled
+                  value={JSON.stringify(contentState, null, 4)}
+                />
+                <CardFooter>Standard Report Customizer</CardFooter>
               </Card>
-             <Router>
-             
-             <Button color="primary" className="float-right">Save</Button>
-             
-              </Router>
+              <Link to="/Visualizer">
+              <Button color="primary" className="float-right">
+               Save
+              </Button>
+            </Link>
             </div>
           </div>
         </div>
-    
+      </div>
     );
   }
 }
+
 export default Visualizer;
