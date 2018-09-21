@@ -56,102 +56,102 @@ const BOOTSTRAP_CLASSES = {
 };
 
 //A CLASS FOR FETCHING CLASS
-class DataFetch extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: false,
-      data: [],
-      Indicator: [],
-      DataElements: [],
-      Datasets: [],
-      orgUnits: [],
-      Period: [],
-      filterText: ""
-    };
-  }
+// class DataFetch extends Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       isLoading: false,
+//       data: [],
+//       Indicator: [],
+//       DataElements: [],
+//       Datasets: [],
+//       orgUnits: [],
+//       Period: [],
+//       filterText: ""
+//     };
+//   }
 
-  componentDidMount() {
-    //FETCH INDICATORS
-    fetch(
-      "http://197.136.81.99:8082/test/api/indicators/?fields=:all&format=json&page_size=1",
-      headers
-    )
-      .then(response => response.json())
-      .then(findResponse => {
-        const indicatorData = findResponse.indicators.map(findResponse => {
-          return {
-            value: `${findResponse.id}`,
-            text: `${findResponse.name}`
-          };
-        });
-        console.log(indicatorData);
-        this.setState({
-          Indicator: indicatorData
-        });
-      });
+//   componentDidMount() {
+//     //FETCH INDICATORS
+//     fetch(
+//       "http://197.136.81.99:8082/test/api/indicators/?fields=:all&format=json&page_size=1",
+//       headers
+//     )
+//       .then(response => response.json())
+//       .then(findResponse => {
+//         const indicatorData = findResponse.indicators.map(findResponse => {
+//           return {
+//             value: `${findResponse.id}`,
+//             text: `${findResponse.name}`
+//           };
+//         });
+//         console.log(indicatorData);
+//         this.setState({
+//           Indicator: indicatorData
+//         });
+//       });
 
-    //END OF INDICATOR FETCH
+//     //END OF INDICATOR FETCH
 
-    //FETCH DATAELEMENTS
-    fetch(
-      "http://197.136.81.99:8082/test/api/dataElements/?fields=:all&format=json&page_size=50",
-      headers
-    )
-      .then(response => response.json())
-      .then(findResponse => {
-        const ElementsData = findResponse.dataElements.map(findResponse => {
-          return {
-            value: `${findResponse.id}`,
-            text: `${findResponse.name}`
-          };
-        });
-        console.log(dataSetData);
-        this.setState({
-          DataElements: ElementsData
-        });
-      });
-    //END OF DATA ELEMENTS
+//     //FETCH DATAELEMENTS
+//     fetch(
+//       "http://197.136.81.99:8082/test/api/dataElements/?fields=:all&format=json&page_size=50",
+//       headers
+//     )
+//       .then(response => response.json())
+//       .then(findResponse => {
+//         const ElementsData = findResponse.dataElements.map(findResponse => {
+//           return {
+//             value: `${findResponse.id}`,
+//             text: `${findResponse.name}`
+//           };
+//         });
+//         console.log(ElementsData);
+//         this.setState({
+//           DataElements: ElementsData
+//         });
+//       });
+//     //END OF DATA ELEMENTS
 
-    //FETCH DATASETS
-    fetch(
-      "http://197.136.81.99:8082/test/api/dataSets/?fields=:all&format=json&page_size=1",
-      headers
-    )
-      .then(response => response.json())
-      .then(findResponse => {
-        const dataSetData = findResponse.dataSets.map(findResponse => {
-          return {
-            value: `${findResponse.id}`,
-            text: `${findResponse.name}`
-          };
-        });
-        console.log(dataSetData);
-        this.setState({
-          DataEleDataSets: dataSetData
-        });
-      });
-    //END OF DATASETS
+//     //FETCH DATASETS
+//     fetch(
+//       "http://197.136.81.99:8082/test/api/dataSets/?fields=:all&format=json&page_size=1",
+//       headers
+//     )
+//       .then(response => response.json())
+//       .then(findResponse => {
+//         const dataSetData = findResponse.dataSets.map(findResponse => {
+//           return {
+//             value: `${findResponse.id}`,
+//             text: `${findResponse.name}`
+//           };
+//         });
+//         console.log(dataSetData);
+//         this.setState({
+//           DataEleDataSets: dataSetData
+//         });
+//       });
+//     //END OF DATASETS
 
-    fetch(
-      "http://197.136.81.99:8082/test/api/organisationUnits/?fields=:all&format=json&page_size=50",
-      headers
-    )
-    .then(response => response.json())
-    .then(findResponse => {
-      const orgunits = findResponse.organisationUnits.map(findResponse => {
-        return {
-          value: `${findResponse.id}`,
-          text: `${findResponse.name}`
-        };
-      });
-      console.log(orgUnits);
-      this.setState({
-        orgUnits: orgunits
-      });
-    });
-  }
-}
+//     fetch(
+//       "http://197.136.81.99:8082/test/api/organisationUnits/?fields=:all&format=json&page_size=50",
+//       headers
+//     )
+//     .then(response => response.json())
+//     .then(findResponse => {
+//       const orgunits = findResponse.organisationUnits.map(findResponse => {
+//         return {
+//           value: `${findResponse.id}`,
+//           text: `${findResponse.name}`
+//         };
+//       });
+//       console.log(orgunits);
+//       this.setState({
+//         orgUnits: orgunits
+//       });
+//     });
+//   }
+// }
 
 //END OF DATA FETCHING CLASS
 
@@ -263,9 +263,54 @@ class DatasetsSelector extends Component {
 
 // INDICATOR SELECTOR START
 class IndicatorSelector extends Component {
-  state = {
-    selectedOptions: []
-  };
+  constructor() {
+    super();
+    this.state = {
+      isLoading: false,
+      data: [],
+      Indicator: [],
+      filterText: "",
+      selectedOptions: []
+    };
+  }
+
+  // componentWillMount(){
+  //   localStorage.getItem("Indicator")&&this.setState({
+  //     Indicator:JSON.parse(localStorage.getItem("Indicator")),
+  //     isLoading:false
+  //   })
+  // }
+  componentDidMount(){
+    //FETCH INDICATORS
+    // if(!localStorage.getItem('Indicator')){
+      fetch(
+        "http://197.136.81.99:8082/test/api/indicators/?fields=:all&format=json&page_size=1",
+        headers
+      )
+        .then(response => response.json())
+        .then(findResponse => {
+          const indicatorData = findResponse.indicators.map(findResponse => {
+            return {
+              value: `${findResponse.id}`,
+              text: `${findResponse.name}`
+            };
+          });
+          console.log(indicatorData);
+          this.setState({
+            Indicator: indicatorData
+          });
+        });
+//     }
+   
+// else{
+//   console.log('Using data from localStorage');
+// }
+
+ }
+  componentWillUpdate(nextProps, nextState){
+    localStorage.setItem("Indicator",JSON.stringify(nextState.Indicator));
+  }
+  //END OF INDICATOR FETCH 
 
   handleDeselect = deselectedOptions => {
     var selectedOptions = this.state.selectedOptions.slice();
@@ -281,6 +326,7 @@ class IndicatorSelector extends Component {
 
   render() {
     var { selectedOptions } = this.state;
+    var {Indicator}=this.state;
     return (
       <div className="row">
         <div className="col-md-6">
@@ -288,10 +334,10 @@ class IndicatorSelector extends Component {
             buttonText="Add"
             classNames={BOOTSTRAP_CLASSES}
             onChange={this.handleSelect}
-            options={INDICATORS}
+            options={Indicator}
             selectedOptions={selectedOptions}
-            textProp="name"
-            valueProp="id"
+            textProp="text"
+            valueProp="value"
           />
         </div>
         <div className="col-md-6">
@@ -305,8 +351,8 @@ class IndicatorSelector extends Component {
             }}
             onChange={this.handleDeselect}
             options={selectedOptions}
-            textProp="name"
-            valueProp="id"
+            textProp="text"
+            valueProp="value"
           />
         </div>
       </div>

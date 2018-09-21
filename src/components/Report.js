@@ -3,6 +3,7 @@ import Header from "./ui/Header";
 import ReportItems from "./ui/ReportItems";
 import { Link } from "react-router-dom";
 import { Card, Button, CardHeader, CardText } from "reactstrap";
+import Collapsible from "react-collapsible";
 
 class Report extends Component {
   render() {
@@ -26,7 +27,22 @@ class Report extends Component {
             <br />
             <Card color="">
               <CardHeader>Selected Data Attributes</CardHeader>
-              <CardText>knvklsnvksl</CardText>
+              {/* <CardText></CardText> */}
+              {/* <Collapsible trigger="Data Elementsw">
+              
+              </Collapsible>
+              <Collapsible trigger="DataSetss">
+              
+              </Collapsible>
+              <Collapsible trigger="Indicatssors">
+              
+              </Collapsible>
+              <Collapsible trigger="Ogranizsation Units">
+              
+              </Collapsible>
+              <Collapsible trigger="Persiods">
+              
+              </Collapsible> */}
             </Card>
 
             <Link to="/App">
