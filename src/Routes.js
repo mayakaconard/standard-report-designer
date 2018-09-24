@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link ,BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Dashboard from './Dashboard';
-import  ReportEditor  from "./components/ReportEditor";
+import  ReportEditor  from "./ReportEditor";
 
 import  App  from "./components/App";
 import Visualizer  from "./components/Visualizer";

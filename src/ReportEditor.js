@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import "react-bootstrap/dist/react-bootstrap";
 
 import CKEditor from "react-ckeditor-component";
-import Header from "./ui/Header";
-import Sidebar from "./ui/Sidebar";
+import Header from "./components/ui/Header";
+import Sidebar from "./components/ui/Sidebar";
 import { Link } from "react-router-dom";
 
 //import 'webpack';
