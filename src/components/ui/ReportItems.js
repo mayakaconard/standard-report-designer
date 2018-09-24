@@ -92,28 +92,19 @@ class ReportItems extends React.Component {
       <Card>
         <CardHeader>Select report attributes</CardHeader>
         <CardBody>
-          <Collapsible trigger="Indicators">
-            {/* {this.state.Indicator.map((dynamicData, key) => (
-              <p>{dynamicData.name}</p>
-            ))} */}
+          <Collapsible trigger="Indicators">          
             <IndicatorSelector />
           </Collapsible>
-          <Collapsible trigger="Data elements">
-            {/* {this.state.dataElements.map( (dynamicData,key) =>
-                 <p>{dynamicData.name}</p>  )}
-            */}
+          <Collapsible trigger="Data elements">           
             <DataElementsSelector />
           </Collapsible>
           <Collapsible trigger="Data Sets">
-            {/* {this.state.Datasets.map((dynamicData, key) => (
-              <p>{dynamicData.name}</p>
-            ))} */}
+           
             <DatasetsSelector />
           </Collapsible>
           <Collapsible trigger="Organisation Units">
-            {this.state.orgUnits.map((dynamicData, key) => (
-              <p>{dynamicData.name}</p>
-            ))}
+          
+       
           </Collapsible>
           <Collapsible trigger="Period">
             <PeriodSelector />

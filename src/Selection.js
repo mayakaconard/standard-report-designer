@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import FilteredMultiSelect from "react-filtered-multiselect";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CustomInput, Form, FormGroup } from "reactstrap";
+
+import { Card, Button, CardHeader} from "reactstrap";
+import Collapsible from "react-collapsible";
 
 //API FETCH DATA FUNCTIONS
 
@@ -16,26 +20,8 @@ const headers = {
 //END OF FETCH DATA FUNCTIONS
 
 //data
-const INDICATORS = [
-  { id: 1, name: "Dbanga_Artemether/Lumefantrine 100/20mg tablet_MOS" },
-  { id: 2, name: "Dbanga_ANC 4th visit coverage by ANC 1 (%)" },
-  {
-    id: 249,
-    name:
-      "Dbanga_No. of people living with HIV received IPT evaluation-(Sub-Total-Female-<15 and >=15years)"
-  },
-  { id: 250, name: "Dbanga_Depo- Provera_MOS" }
-];
-const DATAELEMENTS = [
-  { id: 1, name: "Dbanga_Artemether/Lumefantrine 100/20mg tablet_MOS" },
-  { id: 2, name: "Dbanga_ANC 4th visit coverage by ANC 1 (%)" },
-  {
-    id: 249,
-    name:
-      "Dbanga_No. of people living with HIV received IPT evaluation-(Sub-Total-Female-<15 and >=15years)"
-  },
-  { id: 250, name: "Dbanga_Depo- Provera_MOS" }
-];
+
+
 const DATASETS = [
   { id: 1, name: "Dbanga_Artemether/Lumefantrine 100/20mg tablet_MOS" },
   { id: 2, name: "Dbanga_ANC 4th visit coverage by ANC 1 (%)" },
@@ -54,106 +40,6 @@ const BOOTSTRAP_CLASSES = {
   button: "btn btn btn-block btn-default",
   buttonActive: "btn btn btn-block btn-primary"
 };
-
-//A CLASS FOR FETCHING CLASS
-// class DataFetch extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       isLoading: false,
-//       data: [],
-//       Indicator: [],
-//       DataElements: [],
-//       Datasets: [],
-//       orgUnits: [],
-//       Period: [],
-//       filterText: ""
-//     };
-//   }
-
-//   componentDidMount() {
-//     //FETCH INDICATORS
-//     fetch(
-//       "http://197.136.81.99:8082/test/api/indicators/?fields=:all&format=json&page_size=1",
-//       headers
-//     )
-//       .then(response => response.json())
-//       .then(findResponse => {
-//         const indicatorData = findResponse.indicators.map(findResponse => {
-//           return {
-//             value: `${findResponse.id}`,
-//             text: `${findResponse.name}`
-//           };
-//         });
-//         console.log(indicatorData);
-//         this.setState({
-//           Indicator: indicatorData
-//         });
-//       });
-
-//     //END OF INDICATOR FETCH
-
-//     //FETCH DATAELEMENTS
-//     fetch(
-//       "http://197.136.81.99:8082/test/api/dataElements/?fields=:all&format=json&page_size=50",
-//       headers
-//     )
-//       .then(response => response.json())
-//       .then(findResponse => {
-//         const ElementsData = findResponse.dataElements.map(findResponse => {
-//           return {
-//             value: `${findResponse.id}`,
-//             text: `${findResponse.name}`
-//           };
-//         });
-//         console.log(ElementsData);
-//         this.setState({
-//           DataElements: ElementsData
-//         });
-//       });
-//     //END OF DATA ELEMENTS
-
-//     //FETCH DATASETS
-//     fetch(
-//       "http://197.136.81.99:8082/test/api/dataSets/?fields=:all&format=json&page_size=1",
-//       headers
-//     )
-//       .then(response => response.json())
-//       .then(findResponse => {
-//         const dataSetData = findResponse.dataSets.map(findResponse => {
-//           return {
-//             value: `${findResponse.id}`,
-//             text: `${findResponse.name}`
-//           };
-//         });
-//         console.log(dataSetData);
-//         this.setState({
-//           DataEleDataSets: dataSetData
-//         });
-//       });
-//     //END OF DATASETS
-
-//     fetch(
-//       "http://197.136.81.99:8082/test/api/organisationUnits/?fields=:all&format=json&page_size=50",
-//       headers
-//     )
-//     .then(response => response.json())
-//     .then(findResponse => {
-//       const orgunits = findResponse.organisationUnits.map(findResponse => {
-//         return {
-//           value: `${findResponse.id}`,
-//           text: `${findResponse.name}`
-//         };
-//       });
-//       console.log(orgunits);
-//       this.setState({
-//         orgUnits: orgunits
-//       });
-//     });
-//   }
-// }
-
-//END OF DATA FETCHING CLASS
 
 //class period selector
 class PeriodSelector extends Component {
@@ -354,6 +240,7 @@ class IndicatorSelector extends Component {
             textProp="text"
             valueProp="value"
           />
+          
         </div>
       </div>
     );
@@ -416,6 +303,7 @@ class DataElementsSelector extends Component {
 
   render() {
     var { selectedOptions } = this.state;
+   
     //data for rendering
     const { DataElements } = this.state;
     //  const options=[
@@ -456,6 +344,9 @@ class DataElementsSelector extends Component {
 }
 
 // END OF DATAELEMENTS SELECTRO CLASS
+
+
+
 
 //export the classes
 export {

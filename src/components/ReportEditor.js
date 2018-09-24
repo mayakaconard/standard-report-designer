@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import { Editor } from "react-draft-wysiwyg";
 import "react-bootstrap/dist/react-bootstrap";
-import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 import CKEditor from "react-ckeditor-component";
 import Header from "./ui/Header";
 import Sidebar from "./ui/Sidebar";
@@ -54,18 +54,18 @@ afterPaste(evt){
             {/* End Of Sidebar */}
           </div>
           <div className="col-md-9">
-            <div>
-              
+            <div>        
                 
-                <CKEditor 
-            activeClass="p10"
-            content={this.state.content}
-            events={{
-                "blur":this.onBlur,
+             
+             <CKEditor 
+              activeClass="p10" 
+              content={this.state.content} 
+              events={{
+                "blur": this.onBlur,
                 "afterPaste": this.afterPaste,
-                "change":this.onChange
-            }}
-            />             
+                "change": this.onChange
+              }}
+             />           
                 
                
               <Link to="/Visualizer">

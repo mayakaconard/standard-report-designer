@@ -4,6 +4,14 @@ import ReportItems from "./ui/ReportItems";
 import { Link } from "react-router-dom";
 import { Card, Button, CardHeader, CardText } from "reactstrap";
 import Collapsible from "react-collapsible";
+import SelectedData from "./SelectedData";
+// import {
+//   DataElementsSelector,
+//   DatasetsSelector,
+//   IndicatorSelector,
+//   PeriodSelector
+// } from "../Selection";
+
 
 class Report extends Component {
   render() {
@@ -25,26 +33,10 @@ class Report extends Component {
           </div>
           <div className="col-md-9">
             <br />
-            <Card color="">
-              <CardHeader>Selected Data Attributes</CardHeader>
-              {/* <CardText></CardText> */}
-              {/* <Collapsible trigger="Data Elementsw">
-              
-              </Collapsible>
-              <Collapsible trigger="DataSetss">
-              
-              </Collapsible>
-              <Collapsible trigger="Indicatssors">
-              
-              </Collapsible>
-              <Collapsible trigger="Ogranizsation Units">
-              
-              </Collapsible>
-              <Collapsible trigger="Persiods">
-              
-              </Collapsible> */}
-            </Card>
-
+           {/* <Card>
+             <CardText>jkhojiojoijioj</CardText>
+           </Card> */}
+           <SelectedData />
             <Link to="/App">
               <Button color="primary" className="float-right">
                 Next

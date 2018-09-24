@@ -54,7 +54,7 @@ class Dashboard extends Component {
               </CardText>
             </Card>
 
-            <Link to="/report">
+            <Link to="/ReportData">
               <Button color="primary" className="float-right">
                 New
               </Button>
