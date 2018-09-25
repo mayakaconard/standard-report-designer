@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 //import { Editor } from "react-draft-wysiwyg";
 import "react-bootstrap/dist/react-bootstrap";
-
+import Collapsible from "react-collapsible";
 import CKEditor from "react-ckeditor-component";
 import Header from "./components/ui/Header";
 import Sidebar from "./components/ui/Sidebar";
+import { Card, Button, CardHeader,CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
-
-
-//import 'webpack';
-import {Button } from "reactstrap";
 
 
 class ReportEditor extends Component {
   constructor(props){
     super(props);
+    var currentIndicator=localStorage.getItem("someone");
+    console.log(currentIndicator);
     this.updateContent=this.updateContent.bind(this);
     this.state={
         content: '',
+        indicators:currentIndicator,
     }
 }
 updateContent(newContent){
@@ -39,7 +39,7 @@ afterPaste(evt){
 }
   
   render() {
-    
+    var {indicators}=this.state;
     //var content = CKEditor.instances['comment'].getData();
     return (
       <div className="container-fluid">
@@ -50,8 +50,49 @@ afterPaste(evt){
         <br />
         <div className="row">
           <div className="col-md-3">
-            {/*  The application Sidebar*/}
-            <Sidebar />
+          <Card>
+            <CardHeader>Selected report attributes</CardHeader>
+            <CardBody>
+              {/* <CardText>Selected Data elements</CardText> */}
+              {/* <Button  color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Go somewhere</Button>
+              <Collapse isOpen={this.state.collapse}>
+              <CardBody>
+                nkjsfsnfjsfnkf
+              </CardBody>
+              </Collapse> */}
+        
+      <Collapsible trigger="Indicators">
+      {/* <ul>
+      {indicators.map((test)=>
+       <li key={test.value}>
+       {test.text}</li>
+      
+      )}
+       </ul> */}
+     
+      </Collapsible>
+      <Collapsible trigger="Data Elements">
+        <li>This is the collapsible content. It can be any element or React component you like.</li>
+        <li>It can even be another Collapsible component. Check out the next section!</li>
+      </Collapsible>
+      <Collapsible trigger="Programs">
+        <p>This is the collapsible content. It can be any element or React component you like.</p>
+        <p>It can even be another Collapsible component. Check out the next section!</p>
+      </Collapsible>
+
+      {/* Start of side Menu */}
+      {/* <Accordion>
+        
+            <AccordionItem title="Data Elements">
+              <div>
+               tjcnsjcnsj
+              </div>
+            </AccordionItem>
+       
+      </Accordion> */}
+      {/*End of Side Menu  */}
+            </CardBody>
+          </Card>
 
             {/* End Of Sidebar */}
           </div>

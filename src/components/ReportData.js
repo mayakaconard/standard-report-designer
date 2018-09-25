@@ -35,7 +35,10 @@ const BOOTSTRAP_CLASSES = {
 
 class ReportData extends Component {
   constructor() {
-    super();
+        super();
+       // console.log("Constructor has been called",JSON.parse(localStorage.getItem("SelectedIndicators")));
+    var currentIndicator=JSON.parse(localStorage.getItem("someone"));
+    console.log('hello world');
     this.state = {
       isLoading: false,
       filterText: "",
@@ -43,8 +46,8 @@ class ReportData extends Component {
       DataElements: [],
       OrgUnits: [],
       DataSets: [],
-      selectedOptions: [],
-      SelectedIndicators: [],
+      selectedOptions:[],
+      SelectedIndicators:currentIndicator,
       SelectedDataElements: [],
       SelectedOrgUnits: [],
       SelectedDataSets: []
@@ -156,6 +159,7 @@ class ReportData extends Component {
     localStorage.setItem("Datasets",JSON.stringify(nextState.DataSets));
     localStorage.setItem("DataElements",JSON.stringify(nextState.DataElements));
     localStorage.setItem("OrganisationUnits",JSON.stringify(nextState.OrgUnits));
+    
   }
 
   //MULLTISELECT ELEMENT HANDLING
@@ -178,10 +182,14 @@ class ReportData extends Component {
     deselectedIndicators.forEach(option => {
       SelectedIndicators.splice(SelectedIndicators.indexOf(option), 1);
     });
+    console.log(SelectedIndicators);
+    localStorage.setItem("someone",JSON.stringify(SelectedIndicators));
     this.setState({ SelectedIndicators });
   };
   handleSelectIndicator = SelectedIndicators => {
     SelectedIndicators.sort((a, b) => a.id - b.id);
+    console.log(SelectedIndicators);
+    localStorage.setItem("someone",JSON.stringify(SelectedIndicators));
     this.setState({ SelectedIndicators });
   };
   //end of indicators
@@ -403,17 +411,17 @@ class ReportData extends Component {
                 <CardHeader>Selected Report Attributes</CardHeader>
                 <CardBody>
                   <Collapsible trigger="Selected Indicators">
-                    {/* {selectedOptions.length === 0 && (
+                    {SelectedIndicators.length === 0 && (
                       <p>(nothing selected yet)</p>
                     )}
-                    {selectedOptions.length > 0 && (
+                    {SelectedIndicators.length > 0 && (
                       <ol>
-                        {selectedOptions.map((Indicator, i) => (
+                        {SelectedIndicators.map((Indicator, i) => (
                           <li key={Indicator.value}>
                             {`${Indicator.text} `}
                             <span
                               style={{ cursor: "pointer" }}
-                              onClick={() => this.handleDeselect(i)}
+                              onClick={() => this.handleDeselectIndicator(i)}
                             >
                               &times;
                             </span>
@@ -421,7 +429,7 @@ class ReportData extends Component {
                         ))}
                       </ol>
                     )}
-                    {selectedOptions.length > 0 && (
+                    {SelectedIndicators.length > 0 && (
                       <button
                         style={{ marginLeft: 20 }}
                         className="btn btn-default"
@@ -429,7 +437,7 @@ class ReportData extends Component {
                       >
                         Clear Selection
                       </button>
-                    )} */}
+                    )}
                   </Collapsible>
                 </CardBody>
               </Card>
@@ -437,10 +445,11 @@ class ReportData extends Component {
           </div>
           <Link to="/ReportEditor">
             <Button color="primary" className="float-right">
-              Create reort
+              Create report
             </Button>
           </Link>
         </div>
+        
       </div>
     );
   }
