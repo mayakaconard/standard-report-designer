@@ -7,6 +7,7 @@ import Header from "./components/ui/Header";
 import Sidebar from "./components/ui/Sidebar";
 import { Link } from "react-router-dom";
 
+
 //import 'webpack';
 import {Button } from "reactstrap";
 
@@ -16,7 +17,7 @@ class ReportEditor extends Component {
     super(props);
     this.updateContent=this.updateContent.bind(this);
     this.state={
-        content: 'content',
+        content: '',
     }
 }
 updateContent(newContent){
@@ -38,7 +39,8 @@ afterPaste(evt){
 }
   
   render() {
- 
+    
+    //var content = CKEditor.instances['comment'].getData();
     return (
       <div className="container-fluid">
         {/* Application Top Bar */}

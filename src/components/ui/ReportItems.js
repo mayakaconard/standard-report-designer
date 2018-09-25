@@ -87,7 +87,7 @@ class ReportItems extends React.Component {
   }
 
   render() {
-    const { contentState } = this.state;
+    //const { contentState } = this.state;
     return (
       <Card>
         <CardHeader>Select report attributes</CardHeader>

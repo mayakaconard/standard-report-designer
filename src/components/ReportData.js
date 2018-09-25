@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./ui/Header";
 import { Link } from "react-router-dom";
-import { Card, Button, CardHeader, CardText, CardBody } from "reactstrap";
+import { Card, Button, CardHeader,CardBody } from "reactstrap";
 import Collapsible from "react-collapsible";
 import FilteredMultiSelect from "react-filtered-multiselect";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,16 +15,16 @@ const headers = {
   }
 };
 //END OF HEADER
-const DATASETS = [
-  { value: 1, text: "Dbanga_Artemether/Lumefantrine 100/20mg tablet_MOS" },
-  { value: 2, text: "Dbanga_ANC 4th visit coverage by ANC 1 (%)" },
-  {
-    value: 3,
-    text:
-      "Dbanga_No. of people living with HIV received IPT evaluation-(Sub-Total-Female-<15 and >=15years)"
-  },
-  { value: 250, text: "Dbanga_Depo- Provera_MOS" }
-];
+// const DATASETS = [
+//   { value: 1, text: "Dbanga_Artemether/Lumefantrine 100/20mg tablet_MOS" },
+//   { value: 2, text: "Dbanga_ANC 4th visit coverage by ANC 1 (%)" },
+//   {
+//     value: 3,
+//     text:
+//       "Dbanga_No. of people living with HIV received IPT evaluation-(Sub-Total-Female-<15 and >=15years)"
+//   },
+//   { value: 250, text: "Dbanga_Depo- Provera_MOS" }
+// ];
 //control classes
 const BOOTSTRAP_CLASSES = {
   filter: "form-control",
@@ -51,26 +51,39 @@ class ReportData extends Component {
     };
   }
 
+  //check if data is fetched 
+
+  componentWillMount(){
+    localStorage.getItem('Indicator')&&this.setState({
+      Indicator:JSON.parse(localStorage.getItem('Indicator')),
+      isLoading:false
+    })
+  }
   componentDidMount() {
     //fetch indicators
-    fetch(
-      "http://197.136.81.99:8082/test/api/indicators/?fields=:all&format=json&page_size=1",
-      headers
-    )
-      .then(response => response.json())
-      .then(findResponse => {
-        const indicatorData = findResponse.indicators.map(findResponse => {
-          return {
-            value: `${findResponse.id}`,
-            text: `${findResponse.name}`
-          };
+    if(!localStorage.getItem('Indicator')){
+      fetch(
+        "http://197.136.81.99:8082/test/api/indicators/?fields=:all&format=json&page_size=1",
+        headers
+      )
+        .then(response => response.json())
+        .then(findResponse => {
+          const indicatorData = findResponse.indicators.map(findResponse => {
+            return {
+              value: `${findResponse.id}`,
+              text: `${findResponse.name}`
+            };
+          });
+          console.log(indicatorData);
+          this.setState({
+            Indicator: indicatorData
+          });
         });
-        console.log(indicatorData);
-        this.setState({
-          Indicator: indicatorData
-        });
-      });
-
+  
+    }
+    else{
+      console.log('Using locad indicator data');
+    }
     //end of indicators
 
     //Fetch dataElements
@@ -137,31 +150,39 @@ class ReportData extends Component {
     //end of fetching organisationUnits
   }
 
+  //save fetched data to local storage
+  componentWillUpdate(nextProps, nextState){
+    localStorage.setItem("Indicators",JSON.stringify(nextState.Indicator));
+    localStorage.setItem("Datasets",JSON.stringify(nextState.DataSets));
+    localStorage.setItem("DataElements",JSON.stringify(nextState.DataElements));
+    localStorage.setItem("OrganisationUnits",JSON.stringify(nextState.OrgUnits));
+  }
+
   //MULLTISELECT ELEMENT HANDLING
   //MULLTISELECT ELEMENT HANDLING
-  handleDeselect = deselectedOptions => {
-    var selectedOptions = this.state.selectedOptions.slice();
-    deselectedOptions.forEach(option => {
-      selectedOptions.splice(selectedOptions.indexOf(option), 1);
-    });
-    this.setState({ selectedOptions });
-  };
-  handleSelect = selectedOptions => {
-    selectedOptions.sort((a, b) => a.id - b.id);
-    this.setState({ selectedOptions });
-  };
+  // handleDeselect = deselectedOptions => {
+  //   var selectedOptions = this.state.selectedOptions.slice();
+  //   deselectedOptions.forEach(option => {
+  //     selectedOptions.splice(selectedOptions.indexOf(option), 1);
+  //   });
+  //   this.setState({ selectedOptions });
+  // };
+  // handleSelect = selectedOptions => {
+  //   selectedOptions.sort((a, b) => a.id - b.id);
+  //   this.setState({ selectedOptions });
+  // };
   // END
   //Indictor Handler
-  handleDeselectindicator = deselectedIndicators => {
-    var selectedIndicators = this.state.selectedIndicators.slice();
+  handleDeselectIndicator = deselectedIndicators => {
+    var SelectedIndicators = this.state.SelectedIndicators.slice();
     deselectedIndicators.forEach(option => {
-      selectedIndicators.splice(selectedIndicators.indexOf(option), 1);
+      SelectedIndicators.splice(SelectedIndicators.indexOf(option), 1);
     });
-    this.setState({ selectedIndicators });
+    this.setState({ SelectedIndicators });
   };
-  handleSelectIndicator = selectedIndicators => {
-    selectedIndicators.sort((a, b) => a.id - b.id);
-    this.setState({ selectedIndicators });
+  handleSelectIndicator = SelectedIndicators => {
+    SelectedIndicators.sort((a, b) => a.id - b.id);
+    this.setState({ SelectedIndicators });
   };
   //end of indicators
 
@@ -201,6 +222,7 @@ class ReportData extends Component {
       SelectedOrgUnits.splice(SelectedOrgUnits.indexOf(option), 1);
     });
     this.setState({ SelectedOrgUnits });
+    console.log(SelectedOrgUnits);
   };
   handleSelectOrgunit = SelectedOrgUnits => {
     SelectedOrgUnits.sort((a, b) => a.id - b.id);
@@ -223,7 +245,7 @@ class ReportData extends Component {
 
   render() {
     var { SelectedDataElements } = this.state;
-    var { selectedIndicators } = this.state;
+    var { SelectedIndicators } = this.state;
     var { SelectedDataSets } = this.state;
     var { SelectedOrgUnits } = this.state;
     var { selectedOptions } = this.state;
@@ -250,9 +272,9 @@ class ReportData extends Component {
                       <FilteredMultiSelect
                         buttonText="Add"
                         classNames={BOOTSTRAP_CLASSES}
-                        onChange={this.handleSelect}
+                        onChange={this.handleSelectIndicator}
                         options={Indicator}
-                        selectedOptions={selectedOptions}
+                        selectedOptions={SelectedIndicators}
                         textProp="text"
                         valueProp="value"
                       />
@@ -266,8 +288,8 @@ class ReportData extends Component {
                           button: "btn btn btn-block btn-default",
                           buttonActive: "btn btn btn-block btn-danger"
                         }}
-                        onChange={this.handleDeselect}
-                        options={selectedOptions}
+                        onChange={this.handleDeselectIndicator}
+                        options={SelectedIndicators}
                         textProp="text"
                         valueProp="value"
                       />
@@ -275,6 +297,103 @@ class ReportData extends Component {
                   </Collapsible>
 
                   {/* END OF INDICATOR SELECTOR */}
+
+
+                    {/* Data elements selector */}
+                    <Collapsible trigger="Data Elements">
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Add"
+                        classNames={BOOTSTRAP_CLASSES}
+                        onChange={this.handleSelectDataElement}
+                        options={DataElements}
+                        selectedOptions={SelectedDataElements}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Remove"
+                        classNames={{
+                          filter: "form-control",
+                          select: "form-control",
+                          button: "btn btn btn-block btn-default",
+                          buttonActive: "btn btn btn-block btn-danger"
+                        }}
+                        onChange={this.handleDeselectDataElement}
+                        options={SelectedDataElements}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                  </Collapsible>
+
+                  {/* END OF DATA ELEMENTS SELECTOR */}
+
+                    {/* datasets selector */}
+                    <Collapsible trigger="Datasets">
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Add"
+                        classNames={BOOTSTRAP_CLASSES}
+                        onChange={this.handleSelectDataset}
+                        options={DataSets}
+                        selectedOptions={SelectedDataSets}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Remove"
+                        classNames={{
+                          filter: "form-control",
+                          select: "form-control",
+                          button: "btn btn btn-block btn-default",
+                          buttonActive: "btn btn btn-block btn-danger"
+                        }}
+                        onChange={this.handleDeselectDataset}
+                        options={SelectedDataSets}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                  </Collapsible>
+
+                  {/* END OF datasets SELECTOR */}
+
+                    {/* OrgUnits selector */}
+                    <Collapsible trigger="Organization Units">
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Add"
+                        classNames={BOOTSTRAP_CLASSES}
+                        onChange={this.handleSelectOrgunit}
+                        options={OrgUnits}
+                        selectedOptions={SelectedOrgUnits}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Remove"
+                        classNames={{
+                          filter: "form-control",
+                          select: "form-control",
+                          button: "btn btn btn-block btn-default",
+                          buttonActive: "btn btn btn-block btn-danger"
+                        }}
+                        onChange={this.handleDeselectOrgunit}
+                        options={SelectedOrgUnits}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                  </Collapsible>
+
+                  {/* END OF OrgUnits SELECTOR */}
                 </CardBody>
               </Card>
             </div>
@@ -284,7 +403,7 @@ class ReportData extends Component {
                 <CardHeader>Selected Report Attributes</CardHeader>
                 <CardBody>
                   <Collapsible trigger="Selected Indicators">
-                    {selectedOptions.length === 0 && (
+                    {/* {selectedOptions.length === 0 && (
                       <p>(nothing selected yet)</p>
                     )}
                     {selectedOptions.length > 0 && (
@@ -310,7 +429,7 @@ class ReportData extends Component {
                       >
                         Clear Selection
                       </button>
-                    )}
+                    )} */}
                   </Collapsible>
                 </CardBody>
               </Card>

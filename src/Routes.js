@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link ,BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React from 'react';
+import { Route, Switch} from 'react-router-dom';
 import Dashboard from './Dashboard';
 import  ReportEditor  from "./ReportEditor";
 

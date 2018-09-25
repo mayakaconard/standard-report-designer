@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Header from "./ui/Header";
 import ReportItems from "./ui/ReportItems";
 import { Link } from "react-router-dom";
-import { Card, Button, CardHeader, CardText } from "reactstrap";
-import Collapsible from "react-collapsible";
+import { Button } from "reactstrap";
+
 import SelectedData from "./SelectedData";
 // import {
 //   DataElementsSelector,

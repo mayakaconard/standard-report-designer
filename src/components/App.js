@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-bootstrap/dist/react-bootstrap";
 import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { EditorState, convertFromRaw} from "draft-js";
 import Header from "./ui/Header";
 import Sidebar from "./ui/Sidebar";
 import { Link } from "react-router-dom";

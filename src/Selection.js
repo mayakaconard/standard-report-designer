@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
 import FilteredMultiSelect from "react-filtered-multiselect";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CustomInput, Form, FormGroup } from "reactstrap";
-
-import { Card, Button, CardHeader} from "reactstrap";
-import Collapsible from "react-collapsible";
 
 //API FETCH DATA FUNCTIONS
 
@@ -52,7 +48,7 @@ class PeriodSelector extends Component {
   };
 
   render() {
-    var { selectedOptions } = this.state;
+   // var { selectedOptions } = this.state;
     return (
       <div className="row">
         <Form>

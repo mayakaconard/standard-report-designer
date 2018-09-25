@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button, CardHeader} from "reactstrap";
+import { Card,CardHeader} from "reactstrap";
 import Collapsible from "react-collapsible";
 import {
     DataElementsSelector,

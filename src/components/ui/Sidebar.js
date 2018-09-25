@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, CardHeader, CardFooter, CardBody, Collapse, CardTitle, CardText } from 'reactstrap';
+import { Card,CardHeader, CardFooter, CardBody } from 'reactstrap';
 import Collapsible from 'react-collapsible';
 //import {Accordion, AccordionItem} from 'react-sanfona';
 
@@ -21,7 +21,7 @@ class Sidebar extends React.Component {
         this.setState({ collapse: !this.state.collapse });
       }
     render() {
-        const { contentState } = this.state;
+        //const { contentState } = this.state;
         return (
             <Card>
             <CardHeader>Selected report attributes</CardHeader>
