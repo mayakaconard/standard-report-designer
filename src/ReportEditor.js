@@ -7,12 +7,14 @@ import Header from "./components/ui/Header";
 import Sidebar from "./components/ui/Sidebar";
 import { Card, Button, CardHeader,CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListItem } from "@material-ui/core";
 
 
 class ReportEditor extends Component {
   constructor(props){
     super(props);
-    var currentIndicator=localStorage.getItem("someone");
+    var currentIndicator=JSON.parse(localStorage.getItem("someone"));
     console.log(currentIndicator);
     this.updateContent=this.updateContent.bind(this);
     this.state={
@@ -60,15 +62,21 @@ afterPaste(evt){
                 nkjsfsnfjsfnkf
               </CardBody>
               </Collapse> */}
-        
+              <Collapsible trigger="Indicators">
+        <ListGroup>
+        {indicators.map((test)=>      
+          <ListGroupItem  tag="a" href="#" action key={test.value}>{test.text}</ListGroupItem>
+        )}
+        </ListGroup>
+        </Collapsible>
       <Collapsible trigger="Indicators">
-      {/* <ul>
+    
       {indicators.map((test)=>
        <li key={test.value}>
        {test.text}</li>
       
       )}
-       </ul> */}
+     
      
       </Collapsible>
       <Collapsible trigger="Data Elements">
