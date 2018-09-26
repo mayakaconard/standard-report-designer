@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 class ReportEditor extends Component {
   constructor(props){
     super(props);
+    // var data=editor.toDataFormat(html);
+    // console.log(data);
     var currentIndicator=JSON.parse(localStorage.getItem("someone"));
     console.log(currentIndicator);
     this.updateContent=this.updateContent.bind(this);

@@ -132,7 +132,7 @@ class Visualizer extends Component {
                       </Row>
                     </FormGroup>
                   </Form>
-                  <Bar data={data} className="fullsize" />
+                  <Line data={data} className="fullsize" />
                 </CardBody>
                 <textarea
                   className="form-control"

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./components/ui/Header";
 
-import { ListGroup, ListGroupItem } from "reactstrap";
+
 //import ReactDOM from "react-dom";
 //import { Link } from 'react-router';
 import { Link } from "react-router-dom";
@@ -9,25 +9,9 @@ import { Link } from "react-router-dom";
 //import App from "./App";
 import Report from "./components/Report";
 
-import { Card, Button, CardHeader, CardText } from "reactstrap";
+import { Card, Button, CardHeader, CardText,ListGroup, ListGroupItem,Table } from "reactstrap";
 
 class Dashboard extends Component {
-  // state = {
-  //   redirect: false
-  // };
-
-  // setRedirect = () => {
-  //   this.setState({
-  //     redirect: true
-  //   });
-  // };
-
-  // renderRedirect = () => {
-  //   if (this.state.redirect) {
-  //     return <Redirect to="/report" />;
-  //   }
-  // };
-
   render() {
 
     return (
@@ -44,13 +28,31 @@ class Dashboard extends Component {
           </div>
           <div className="col-md-9">
             <br />
-            <Card color="primary">
+            <Card color="">
               <CardHeader>This is my Home Interface</CardHeader>
               <CardText>
-                <ListGroup>
+                {/* <ListGroup>
                   <ListGroupItem>ANC 4th visit Report </ListGroupItem>
                   <ListGroupItem>Ruiru Healthcare Malaria Report</ListGroupItem>
-                </ListGroup>
+                </ListGroup> */}
+                <Table dark>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Name of the Report</th>            
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>ANC 4th visit Report</td>            
+            <td>Edit</td>
+          </tr>
+         
+        </tbody>
+      </Table>
+          
               </CardText>
             </Card>
 
