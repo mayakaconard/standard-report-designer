@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 //import { Editor } from "react-draft-wysiwyg";
-import "react-bootstrap/dist/react-bootstrap";
+//import "react-bootstrap/dist/react-bootstrap";
 import Collapsible from "react-collapsible";
 import CKEditor from "react-ckeditor-component";
 import Header from "./components/ui/Header";
-import Sidebar from "./components/ui/Sidebar";
-import { Card, Button, CardHeader,CardBody } from "reactstrap";
+import graph from './components/icons/graph.png';
+//import Sidebar from "./components/ui/Sidebar";
+import {ButtonGroup, Card, Button, CardHeader,CardBody,CardText,ListGroup, ListGroupItem} from "reactstrap";
 import { Link } from "react-router-dom";
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import { ListItem } from "@material-ui/core";
 
 
 class ReportEditor extends Component {
@@ -104,10 +103,18 @@ afterPaste(evt){
 
             {/* End Of Sidebar */}
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9">          
             <div>        
                 
-             
+            <Card color="">
+              <CardHeader>Standard Report Editor </CardHeader>
+              <CardText>
+                <ButtonGroup>
+              <Button color=""><img src={require('./components/icons/graph.png')}width="30" height="30" /> </Button>
+              <Button color=""><img src={require('./components/icons/line-graph.png')}width="30" height="30" /></Button>
+              <Button color=""><img src={require('./components/icons/isometric.jpg')}width="30" height="30" /> </Button>
+              <Button color="white" ><img src={require('./components/icons/Bar-Chart-icon.png')}width="30" height="30" /></Button>
+              </ButtonGroup>
              <CKEditor 
               activeClass="p10" 
               content={this.state.content} 
@@ -117,15 +124,22 @@ afterPaste(evt){
                 "change": this.onChange
               }}
              />           
-                
-               
-              <Link to="/Visualizer">
+                  </CardText>
+            </Card>
+               <div className="container-fluid">
+               <div className="row">
+               <div className="col-md-12"></div>
+               </div>
+               </div>
+              
+            </div>
+            <Link to="/Visualizer">
               <Button color="primary" className="float-right">
                 Visualizer
               </Button>
             </Link>
-            </div>
           </div>
+     
         </div>
       </div>
     );
