@@ -6,7 +6,7 @@ import CKEditor from "react-ckeditor-component";
 import Header from "./components/ui/Header";
 import graph from './components/icons/graph.png';
 //import Sidebar from "./components/ui/Sidebar";
-import {ButtonGroup, Card, Button, CardHeader,CardBody,CardText,ListGroup, ListGroupItem} from "reactstrap";
+import {ButtonGroup, Card,CardFooter, Button, CardHeader,CardBody,CardText,ListGroup, ListGroupItem} from "reactstrap";
 import { Link } from "react-router-dom";
 
 
@@ -113,7 +113,8 @@ afterPaste(evt){
               <Button color=""><img src={require('./components/icons/graph.png')}width="30" height="30" /> </Button>
               <Button color=""><img src={require('./components/icons/line-graph.png')}width="30" height="30" /></Button>
               <Button color=""><img src={require('./components/icons/isometric.jpg')}width="30" height="30" /> </Button>
-              <Button color="white" ><img src={require('./components/icons/Bar-Chart-icon.png')}width="30" height="30" /></Button>
+              <Button color="" ><img src={require('./components/icons/Bar-Chart-icon.png')}width="30" height="30" /></Button>
+              <Button color="" ><img src={require('./components/icons/gis.png')}width="30" height="30" /></Button>
               </ButtonGroup>
              <CKEditor 
               activeClass="p10" 
@@ -125,6 +126,13 @@ afterPaste(evt){
               }}
              />           
                   </CardText>
+                  <CardFooter>
+                    <ButtonGroup>
+                      <Button color="primary">Save Report</Button>
+                      <Button color="primary">Export  PDF</Button>
+                      <Button color="primary">Export PNG</Button>
+                    </ButtonGroup>
+                  </CardFooter>
             </Card>
                <div className="container-fluid">
                <div className="row">
