@@ -5,6 +5,10 @@ import { Card, Button, CardHeader,CardBody } from "reactstrap";
 import Collapsible from "react-collapsible";
 import FilteredMultiSelect from "react-filtered-multiselect";
 import "bootstrap/dist/css/bootstrap.min.css";
+//import Counties from '../components/Counties.json';
+
+// const counties = require('../components/Counties.json')
+// console.log(counties.results)
 
 //API FETCH DATA FUNCTIONS
 
@@ -15,16 +19,7 @@ const headers = {
   }
 };
 //END OF HEADER
-// const DATASETS = [
-//   { value: 1, text: "Dbanga_Artemether/Lumefantrine 100/20mg tablet_MOS" },
-//   { value: 2, text: "Dbanga_ANC 4th visit coverage by ANC 1 (%)" },
-//   {
-//     value: 3,
-//     text:
-//       "Dbanga_No. of people living with HIV received IPT evaluation-(Sub-Total-Female-<15 and >=15years)"
-//   },
-//   { value: 250, text: "Dbanga_Depo- Provera_MOS" }
-// ];
+
 //control classes
 const BOOTSTRAP_CLASSES = {
   filter: "form-control",
@@ -36,8 +31,14 @@ const BOOTSTRAP_CLASSES = {
 class ReportData extends Component {
   constructor() {
         super();
-       // console.log("Constructor has been called",JSON.parse(localStorage.getItem("SelectedIndicators")));
+        // var counties = require('../components/Counties.json')
+        // console.log(counties.results)
+    
     var currentIndicator=JSON.parse(localStorage.getItem("someone"));
+    var currentDataElements=JSON.parse(localStorage.getItem("element"));
+    var currentDataSets=JSON.parse(localStorage.getItem("dataset"));
+    var currentOrgUnits=JSON.parse(localStorage.getItem("orgunit"));
+    var currentCounty=JSON.parse(localStorage.getItem("county"))
     console.log('hello world');
     this.state = {
       isLoading: false,
@@ -46,11 +47,13 @@ class ReportData extends Component {
       DataElements: [],
       OrgUnits: [],
       DataSets: [],
+      County: [],
       selectedOptions:[],
       SelectedIndicators:currentIndicator,
-      SelectedDataElements: [],
-      SelectedOrgUnits: [],
-      SelectedDataSets: []
+      SelectedDataElements: currentDataElements,
+      SelectedOrgUnits: currentDataSets,
+      SelectedDataSets: currentOrgUnits,
+      SelectedCounty: currentCounty
     };
   }
 
@@ -61,8 +64,61 @@ class ReportData extends Component {
       Indicator:JSON.parse(localStorage.getItem('Indicator')),
       isLoading:false
     })
+
+    localStorage.getItem('DataElements')&&this.setState({
+      DataElements:JSON.parse(localStorage.getItem('DataElements')),
+      isLoading:false
+    })
+
+    localStorage.getItem('DataSets')&&this.setState({
+      DataSets:JSON.parse(localStorage.getItem('DataSets')),
+      isLoading:false
+    })
+
+    localStorage.getItem('OrgUnits')&&this.setState({
+      OrgUnits:JSON.parse(localStorage.getItem('OrgUnits')),
+      isLoading:false
+    })
+    localStorage.getItem('County')&&this.setState({
+      OrgUnits:JSON.parse(localStorage.getItem('County')),
+      isLoading:false
+    })
   }
+  
+   
+   //fetch counties
+  
+
   componentDidMount() {
+    // this.setState({
+    //   County:counties.results
+    // });
+    // console.log(this.state.County)
+    // if(!localStorage.getItem('County')){
+    //   fetch(
+    //     '../components/Counties.json'
+    //   )
+    //     .then(response => response.json())
+    //     .then(findResponse => {
+    //       const countyData = findResponse.results.map(findResponse => {
+    //         return {
+    //           value: `${findResponse.id}`,
+    //           text: `${findResponse.name}`
+    //         };
+    //       });
+    //       console.log(countyData);
+    //       this.setState({
+    //         County: countyData
+    //       });
+    //     });
+  
+    // }
+    // else{
+    //   console.log('Using locad county data');
+    // }
+   
+
+
     //fetch indicators
     if(!localStorage.getItem('Indicator')){
       fetch(
@@ -90,6 +146,7 @@ class ReportData extends Component {
     //end of indicators
 
     //Fetch dataElements
+    if(!localStorage.getItem('DataElements')){
     fetch(
       `http://197.136.81.99:8082/test/api/dataElements/?fields=:all&format=json&page_size=50`,
       headers
@@ -107,10 +164,14 @@ class ReportData extends Component {
           DataElements: dataElementData
         });
       });
-
+    }
+    else{
+      console.log('Using locad DataElement data');
+    }
     //end of fetching dataElements
 
     //fetch DataSets
+    if(!localStorage.getItem('DataSets')){
     fetch(
       `http://197.136.81.99:8082/test/api/dataSets/?fields=:all&format=json&page_size=50`,
       headers
@@ -128,9 +189,15 @@ class ReportData extends Component {
           DataSets: dataSetData
         });
       });
+     }
+     else{
+       console.log('Using locad DataSet data');
+     }
     //End of fetching dataSets
 
     //fetch organisationUnits
+
+    if(!localStorage.getItem('OrgUnits')){
     fetch(
       `http://197.136.81.99:8082/test/api/organisationUnits/?fields=:all&format=json&page_size=50`,
       headers
@@ -151,6 +218,11 @@ class ReportData extends Component {
         });
       });
     //end of fetching organisationUnits
+    }
+    else{
+      console.log('Using locad OrgUnit data');
+    }
+
   }
 
   //save fetched data to local storage
@@ -158,25 +230,12 @@ class ReportData extends Component {
     localStorage.setItem("Indicators",JSON.stringify(nextState.Indicator));
     localStorage.setItem("Datasets",JSON.stringify(nextState.DataSets));
     localStorage.setItem("DataElements",JSON.stringify(nextState.DataElements));
-    localStorage.setItem("OrganisationUnits",JSON.stringify(nextState.OrgUnits));
+    localStorage.setItem("organisationUnits",JSON.stringify(nextState.OrgUnits));
+    localStorage.setItem("Counties",JSON.stringify(nextState.County));
     
   }
 
-  //MULLTISELECT ELEMENT HANDLING
-  //MULLTISELECT ELEMENT HANDLING
-  // handleDeselect = deselectedOptions => {
-  //   var selectedOptions = this.state.selectedOptions.slice();
-  //   deselectedOptions.forEach(option => {
-  //     selectedOptions.splice(selectedOptions.indexOf(option), 1);
-  //   });
-  //   this.setState({ selectedOptions });
-  // };
-  // handleSelect = selectedOptions => {
-  //   selectedOptions.sort((a, b) => a.id - b.id);
-  //   this.setState({ selectedOptions });
-  // };
-  // END
-  //Indictor Handler
+  
   handleDeselectIndicator = deselectedIndicators => {
     var SelectedIndicators = this.state.SelectedIndicators.slice();
     deselectedIndicators.forEach(option => {
@@ -201,10 +260,14 @@ class ReportData extends Component {
     deselectedDataElements.forEach(option => {
       SelectedDataElements.splice(SelectedDataElements.indexOf(option), 1);
     });
+    console.log(SelectedDataElements);
+    localStorage.setItem("element",JSON.stringify(SelectedDataElements));
     this.setState({ SelectedDataElements });
   };
   handleSelectDataElement = SelectedDataElements => {
     SelectedDataElements.sort((a, b) => a.id - b.id);
+    console.log(SelectedDataElements);
+    localStorage.setItem("element",JSON.stringify(SelectedDataElements));
     this.setState({ SelectedDataElements });
   };
   //end of dataElements Handling
@@ -216,9 +279,13 @@ class ReportData extends Component {
       SelectedDataSets.splice(SelectedDataSets.indexOf(option), 1);
     });
     this.setState({ SelectedDataSets });
+    localStorage.setItem("dataset",JSON.stringify(SelectedDataSets));
+    this.setState({ SelectedDataSets });
   };
   handleSelectDataset = SelectedDataSets => {
     SelectedDataSets.sort((a, b) => a.id - b.id);
+    console.log(SelectedDataSets);
+    localStorage.setItem("dataset",JSON.stringify(SelectedDataSets));
     this.setState({ SelectedDataSets });
   };
   // END DataSets Handling
@@ -230,13 +297,16 @@ class ReportData extends Component {
       SelectedOrgUnits.splice(SelectedOrgUnits.indexOf(option), 1);
     });
     this.setState({ SelectedOrgUnits });
+    localStorage.setItem("orgunit",JSON.stringify(SelectedOrgUnits));
     console.log(SelectedOrgUnits);
   };
   handleSelectOrgunit = SelectedOrgUnits => {
     SelectedOrgUnits.sort((a, b) => a.id - b.id);
+    console.log(SelectedOrgUnits);
+    localStorage.setItem("orgunit",JSON.stringify(SelectedOrgUnits));
     this.setState({ SelectedOrgUnits });
   };
-  // END organisationUnits Handling
+  
   handleDeselect(index) {
     var selectedOptions = this.state.selectedOptions.slice();
     selectedOptions.splice(index, 1);
@@ -256,13 +326,13 @@ class ReportData extends Component {
     var { SelectedIndicators } = this.state;
     var { SelectedDataSets } = this.state;
     var { SelectedOrgUnits } = this.state;
-    var { selectedOptions } = this.state;
-
+    var{SelectedCounty}=this.state;
     var { DataElements } = this.state;
     var { Indicator } = this.state;
-    //var {DATASETS}=this.state;
+   
     var { DataSets } = this.state;
     var { OrgUnits } = this.state;
+    var{County}=this.state;
 
     return (
       <div>
@@ -310,6 +380,7 @@ class ReportData extends Component {
                     {/* Data elements selector */}
                     <Collapsible trigger="Data Elements">
                     <div className="col-md-12">
+                    {/* <Counties/> */}
                       <FilteredMultiSelect
                         buttonText="Add"
                         classNames={BOOTSTRAP_CLASSES}
@@ -401,6 +472,40 @@ class ReportData extends Component {
                     </div>
                   </Collapsible>
 
+               {/* County Selector */}
+              {/* <Collapsible trigger="Counties">
+              <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Add"
+                        classNames={BOOTSTRAP_CLASSES}
+                        onChange={counties.results}
+                        options={this.state.County}
+                        selectedOptions={SelectedCounty}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+                    <div className="col-md-12">
+                      <FilteredMultiSelect
+                        buttonText="Remove"
+                        classNames={{
+                          filter: "form-control",
+                          select: "form-control",
+                          button: "btn btn btn-block btn-default",
+                          buttonActive: "btn btn btn-block btn-danger"
+                        }}
+                        onChange={this.handleDeselectCounty}
+                        options={SelectedCounty}
+                        textProp="text"
+                        valueProp="value"
+                      />
+                    </div>
+               </Collapsible> */}
+
+
+               
+
+
                   {/* END OF OrgUnits SELECTOR */}
                 </CardBody>
               </Card>
@@ -429,16 +534,75 @@ class ReportData extends Component {
                         ))}
                       </ol>
                     )}
-                    {SelectedIndicators.length > 0 && (
-                      <button
-                        style={{ marginLeft: 20 }}
-                        className="btn btn-default"
-                        onClick={this.handleClearSelection}
-                      >
-                        Clear Selection
-                      </button>
-                    )}
+                    
                   </Collapsible>
+
+                  <Collapsible trigger="Selected Data Elements">
+                    {SelectedDataElements.length === 0 && (
+                      <p>(nothing selected yet)</p>
+                    )}
+                    {SelectedDataElements.length > 0 && (
+                      <ol>
+                        {SelectedDataElements.map((DataElements, i) => (
+                          <li key={DataElements.value}>
+                            {`${DataElements.text} `}
+                            <span
+                              style={{ cursor: "pointer" }}
+                              onClick={() => this.handleDeselectDataElement(i)}
+                            >
+                              &times;
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                    
+                  </Collapsible>
+
+              <Collapsible trigger="Selected Data Sets">
+                    {SelectedDataSets.length === 0 && (
+                      <p>(nothing selected yet)</p>
+                    )}
+                    {SelectedDataSets.length > 0 && (
+                      <ol>
+                        {SelectedDataSets.map((DataSets, i) => (
+                          <li key={DataSets.value}>
+                            {`${DataSets.text} `}
+                            <span
+                              style={{ cursor: "pointer" }}
+                              onClick={() => this.handleDeselectDataset(i)}
+                            >
+                              &times;
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                    
+                  </Collapsible>
+
+                  <Collapsible trigger="Selected Org Units">
+                    {SelectedOrgUnits.length === 0 && (
+                      <p>(nothing selected yet)</p>
+                    )}
+                    {SelectedOrgUnits.length > 0 && (
+                      <ol>
+                        {SelectedOrgUnits.map((OrgUnits, i) => (
+                          <li key={OrgUnits.value}>
+                            {`${OrgUnits.text} `}
+                            <span
+                              style={{ cursor: "pointer" }}
+                              onClick={() => this.handleDeselectOrgunit(i)}
+                            >
+                              &times;
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                   
+                  </Collapsible>
+                 
                 </CardBody>
               </Card>
             </div>

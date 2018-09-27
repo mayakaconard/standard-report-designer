@@ -23,13 +23,13 @@ class Dashboard extends Component {
           <div className="col-md-3">
             <br />
             <Card>
-              <CardHeader>Selected report attributes</CardHeader>
+              <CardHeader>Standard Report Designer</CardHeader>
             </Card>
           </div>
           <div className="col-md-9">
             <br />
             <Card color="">
-              <CardHeader>This is my Home Interface</CardHeader>
+              <CardHeader>Custom Standard Reports Created</CardHeader>
               <CardText>
                 {/* <ListGroup>
                   <ListGroupItem>ANC 4th visit Report </ListGroupItem>
