@@ -28,13 +28,20 @@ class ReportEditor extends Component {
     // console.log(this.state.content);
 
     var currentIndicator = JSON.parse(localStorage.getItem("someone"));
+    var currentDataElements = JSON.parse(localStorage.getItem("element"));
+    var currentDataSets = JSON.parse(localStorage.getItem("dataset"));
+    var currentOrgUnits = JSON.parse(localStorage.getItem("orgunit"));
+    //var currentCounty=JSON.parse(localStorage.getItem("county"))
     console.log(currentIndicator);
     this.updateContent = this.updateContent.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
-    var currentState = JSON.parse(localStorage.getItem('editor'));
+    var currentState = JSON.parse(localStorage.getItem("editor"));
     this.state = {
       content: currentState,
-      indicators: currentIndicator
+      indicators: currentIndicator,
+      elements: currentDataElements,
+      datasets: currentDataSets,
+      orgunits:currentOrgUnits
     };
   }
   updateContent(newContent) {
@@ -49,7 +56,6 @@ class ReportEditor extends Component {
   }
   onBlur(evt) {
     console.log("onBlur fired: ", evt);
-
   }
   afterPaste(evt) {
     console.log("afterPaste called with event info: ", evt);
@@ -60,6 +66,9 @@ class ReportEditor extends Component {
 
   render() {
     var { indicators } = this.state;
+    var {elements}=this.state;
+    var {datasets}=this.state;
+    var {orgunits}=this.state;
 
     //var content = CKEditor.instances['comment'].getData();
     return (
@@ -100,42 +109,60 @@ class ReportEditor extends Component {
                     ))}
                   </ListGroup>
                 </Collapsible>
-                <Collapsible trigger="Indicators">
-                  {indicators.map(test => (
-                    <li key={test.value}>{test.text}</li>
-                  ))}
-                </Collapsible>
                 <Collapsible trigger="Data Elements">
-                  <li>
-                    This is the collapsible content. It can be any element or
-                    React component you like.
-                  </li>
-                  <li>
-                    It can even be another Collapsible component. Check out the
-                    next section!
-                  </li>
+                  <ListGroup>
+                    {elements.map(data => (
+                      <ListGroupItem
+                        tag="a"
+                        onClick={() => {
+                          this.updateContent(data.text);
+                        }}
+                        action
+                        key={data.value}
+                        title={data.text}
+                        id={data.value}
+                      >
+                        {data.text}
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
                 </Collapsible>
-                <Collapsible trigger="Programs">
-                  <p>
-                    This is the collapsible content. It can be any element or
-                    React component you like.
-                  </p>
-                  <p>
-                    It can even be another Collapsible component. Check out the
-                    next section!
-                  </p>
+                <Collapsible trigger="Data Sets">
+                  <ListGroup>
+                    {datasets.map(data => (
+                      <ListGroupItem
+                        tag="a"
+                        onClick={() => {
+                          this.updateContent(data.text);
+                        }}
+                        action
+                        key={data.value}
+                        title={data.text}
+                        id={data.value}
+                      >
+                        {data.text}
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
                 </Collapsible>
-
-                {/* Start of side Menu */}
-                {/* <Accordion>
-        
-            <AccordionItem title="Data Elements">
-              <div>
-               tjcnsjcnsj
-              </div>
-            </AccordionItem>
-       
-      </Accordion> */}
+                <Collapsible trigger="Organization Units">
+                  <ListGroup>
+                    {orgunits.map(data => (
+                      <ListGroupItem
+                        tag="a"
+                        onClick={() => {
+                          this.updateContent(data.text);
+                        }}
+                        action
+                        key={data.value}
+                        title={data.text}
+                        id={data.value}
+                      >
+                        {data.text}
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
+                </Collapsible>             
                 {/*End of Side Menu  */}
               </CardBody>
             </Card>
