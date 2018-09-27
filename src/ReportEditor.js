@@ -4,8 +4,7 @@ import React, { Component } from "react";
 import Collapsible from "react-collapsible";
 import CKEditor from "react-ckeditor-component";
 import Header from "./components/ui/Header";
-import graph from './components/icons/graph.png';
-//import Sidebar from "./components/ui/Sidebar";
+
 import {ButtonGroup, Card,CardFooter, Button, CardHeader,CardBody,CardText,ListGroup, ListGroupItem} from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -13,13 +12,19 @@ import { Link } from "react-router-dom";
 class ReportEditor extends Component {
   constructor(props){
     super(props);
-    // var data=editor.toDataFormat(html);
-    // console.log(data);
+  
+    // this.state={
+    //   content:""
+    // }
+    // console.log(this.state.content);
+
     var currentIndicator=JSON.parse(localStorage.getItem("someone"));
     console.log(currentIndicator);
     this.updateContent=this.updateContent.bind(this);
+    this.handleCheck=this.handleCheck.bind(this);
+var currentState=JSON.parse(localStorage.getItem('editor'));
     this.state={
-        content: '',
+        content: currentState,
         indicators:currentIndicator,
     }
 }
@@ -27,8 +32,11 @@ updateContent(newContent){
     this.setState({
         content: newContent
     })
+  
+    
 }
 onChange(evt){
+  
    console.log("onchange fired: ",evt);
    
 }
@@ -40,12 +48,24 @@ afterPaste(evt){
     console.log("afterPaste called with event info: ", evt);
 
 }
+handleCheck(e) {
+console.log(e.target.title);
+
+
+}
+
   
   render() {
     var {indicators}=this.state;
+    var m=localStorage.setItem("editor",JSON.stringify(this.state.content));
+    console.log(m);
+    
+    
     //var content = CKEditor.instances['comment'].getData();
     return (
+      
       <div className="container-fluid">
+      {/* <textarea name={this.elementName} defaultValue={this.props.value}></textarea> */}
         {/* Application Top Bar */}
         <Header />
 
@@ -66,7 +86,7 @@ afterPaste(evt){
               <Collapsible trigger="Indicators">
         <ListGroup>
         {indicators.map((test)=>      
-          <ListGroupItem  tag="a" href="#" action key={test.value}>{test.text}</ListGroupItem>
+          <ListGroupItem tag="a" onClick={()=>{this.updateContent(test.text )}} action key={test.value} title={test.text} id={test.value}>{test.text}</ListGroupItem>
         )}
         </ListGroup>
         </Collapsible>
@@ -119,14 +139,17 @@ afterPaste(evt){
               <Button color="" ><img src={require('./components/icons/gis.png')}width="30" height="30" /></Button>
               </ButtonGroup>
              <CKEditor 
-              activeClass="p10" 
-              content={this.state.content} 
+              activeClass="editor1" 
+              content={this.state.content}
+              onChange={this.updateContent}
               events={{
                 "blur": this.onBlur,
                 "afterPaste": this.afterPaste,
                 "change": this.onChange
               }}
-             />           
+            
+             /> 
+                   
                   </CardText>
                   <CardFooter>
                     <ButtonGroup>
@@ -154,6 +177,17 @@ afterPaste(evt){
       </div>
     );
   }
+
+  // componentDidMount() {
+  //   let configuration = {
+  //     toolbar: "Basic"
+  //   };
+  //   CKEDITOR.replace(this.elementName, configuration);
+  //   CKEDITOR.instances[this.elementName].on("change", function () {
+  //     let data = CKEDITOR.instances[this.elementName].getData();
+  //     this.props.onChange(data);
+  //   }.bind(this));
+  // }
 }
 
 export default ReportEditor;
