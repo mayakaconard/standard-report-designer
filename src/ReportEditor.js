@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import Collapsible from "react-collapsible";
 import CKEditor from "react-ckeditor-component";
 import Header from "./components/ui/Header";
+import {HorizontalBar ,  Scatter ,Line , Bar , Pie} from 'react-chartjs-2';
+import { defaults } from 'react-chartjs-2';
 
 import {
   ButtonGroup,
@@ -17,7 +19,30 @@ import {
   ListGroupItem
 } from "reactstrap";
 import { Link } from "react-router-dom";
+//start of chart 
 
+var data = {
+  labels: ["January", "February", "March", "April", "May", "June", "July"],
+  datasets: [{
+    label: "Measles",
+    borderColor: 'rgb(0, 0, 0)',
+    // backgroundColor: 'rgb(66 , 134, 244)',
+    
+    borderWidth: 1,
+    
+    data: [4, 14, 12, 2, 1, 5, 13],
+  },
+  {
+    label: "Rubella",
+    borderColor: 'rgb(0, 0, 0)',
+    backgroundColor: 'rgb(178, 69, 69)',
+    borderWidth: 1,
+    data: [3, 10, 5, 2, 20, 16, 10],
+  }
+]
+}
+
+//end of chart 
 class ReportEditor extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +60,7 @@ class ReportEditor extends Component {
     console.log(currentIndicator);
     this.updateContent = this.updateContent.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+  
     var currentState = JSON.parse(localStorage.getItem("editor"));
     this.state = {
       content: currentState,
@@ -45,6 +71,8 @@ class ReportEditor extends Component {
     };
   }
   updateContent(newContent) {
+    let temp = this.state.content;
+    newContent = temp + newContent;
     this.setState({
       content: newContent
     });
@@ -62,6 +90,12 @@ class ReportEditor extends Component {
   }
   handleCheck(e) {
     console.log(e.target.title);
+  }
+  changeChartType(newChartType){
+    this.setState({
+      ...this.state,
+      chartType: newChartType
+    })
   }
 
   render() {
@@ -180,6 +214,7 @@ class ReportEditor extends Component {
                         src={require("./components/icons/graph.png")}
                         width="30"
                         height="30"
+                        onClick={()=>{this.changeChartType("HORIZONTAL BAR")}}
                       />{" "}
                     </Button>
                     <Button color="">
@@ -187,6 +222,8 @@ class ReportEditor extends Component {
                         src={require("./components/icons/line-graph.png")}
                         width="30"
                         height="30"
+                        
+                        onClick={()=>{this.changeChartType("LINE")}}
                       />
                     </Button>
                     <Button color="">
@@ -194,6 +231,7 @@ class ReportEditor extends Component {
                         src={require("./components/icons/isometric.jpg")}
                         width="30"
                         height="30"
+                        onClick={()=>{this.changeChartType("BAR")}}
                       />{" "}
                     </Button>
                     <Button color="">
@@ -212,6 +250,7 @@ class ReportEditor extends Component {
                     </Button>
                   </ButtonGroup>
                   <CKEditor
+                  
                     activeClass="editor"
                     content={this.state.content}
                     onChange={this.updateContent}
@@ -220,7 +259,34 @@ class ReportEditor extends Component {
                       afterPaste: this.afterPaste,
                       change: this.onChange
                     }}
+                    
                   />
+                      {
+              this.state.chartType == "LINE" &&(
+                <div>LINE CHART Rendered here
+
+                <Line data={data} className='fullsize' />
+                </div>
+              )
+            }
+
+             {
+              this.state.chartType == "BAR" &&(
+                <div>BAR CHART Rendered here
+
+                <Bar data={data} className="fullsize" />
+                </div>
+              )
+            }
+
+            {
+              this.state.chartType == "HORIZONTAL BAR" &&(
+                <div>HORIZONTAL BAR CHART Rendered here
+
+                <HorizontalBar data={data} className='fullsize' />
+                </div>
+              )
+            }
                 </CardText>
                 <CardFooter>
                   <ButtonGroup>

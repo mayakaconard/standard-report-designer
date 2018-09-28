@@ -99,7 +99,7 @@ class Visualizer extends Component {
                   />
 
                   <Nav tabs />
-                  <Form>
+                  {/* <Form>
                     <FormGroup>
                       <Row>
                         <Col md={5}>
@@ -110,7 +110,7 @@ class Visualizer extends Component {
                             onChange="setCode(this)"
                             required
                           >
-                            {/* multiple data-live-search="true" */}
+                     
                             <option value="">Select Region</option>
                             <option value="44">Central</option>
                             <option value="55">Coast</option>
@@ -131,7 +131,7 @@ class Visualizer extends Component {
                         </Col>
                       </Row>
                     </FormGroup>
-                  </Form>
+                  </Form> */}
                   <Line data={data} className="fullsize" />
                 </CardBody>
                 <textarea

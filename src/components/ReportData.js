@@ -38,7 +38,9 @@ class ReportData extends Component {
     var currentDataElements=JSON.parse(localStorage.getItem("element"));
     var currentDataSets=JSON.parse(localStorage.getItem("dataset"));
     var currentOrgUnits=JSON.parse(localStorage.getItem("orgunit"));
+    
     var currentCounty=JSON.parse(localStorage.getItem("county"))
+    
     console.log('hello world');
     this.state = {
       isLoading: false,
